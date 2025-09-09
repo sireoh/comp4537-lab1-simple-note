@@ -55,7 +55,7 @@ class NoteRow {
     this.noteRowDiv.id = this.id;
 
     // Creates the NoteText and RemoveButton
-    this.noteText = new NoteText(text, readOnly, lastStoredSpan);
+    this.noteText = new NoteText(this.id, text, readOnly, lastStoredSpan);
     if (!readOnly) this.removeButton = new RemoveButton(this.id);
 
     // Appends both children
@@ -78,6 +78,9 @@ class NoteRow {
 }
 
 class NoteText {
+  // Set id
+  id: string;
+
   textarea: HTMLTextAreaElement;
   lastStoredSpan: HTMLSpanElement;
 
@@ -85,10 +88,14 @@ class NoteText {
   static MAX_HEIGHT = 3;
 
   constructor(
+    id: string,
     text: string,
     readOnly: boolean,
     lastStoredSpanDiv: HTMLSpanElement
   ) {
+    // Stores the id into the class
+    this.id = id;
+
     // Link last stored span
     this.lastStoredSpan = lastStoredSpanDiv;
 
@@ -108,7 +115,9 @@ class NoteText {
   }
 
   writeToLocalStorage() {
-    console.log("Writing to local storage:", this.textarea.value);
+    console.log(
+      `Writing to local storage. ID: ${this.id}, Value: ${this.textarea.value}`
+    );
     this.lastStoredSpan.innerHTML = new Date().toLocaleString();
   }
 }
