@@ -11,6 +11,19 @@ class NoteContainer {
 
     // Links to the existing span on the DOM
     this.lastStoredSpan = lastStoredSpanDiv;
+
+    // Hydrates the container immediately
+    this.hydrateContainer();
+  }
+
+  hydrateContainer(): void {
+    // Hydrates the container with data from the local storage
+    Object.keys(localStorage).forEach((key) => {
+      const value = localStorage.getItem(key)!;
+      this.noteContainerDiv.appendChild(
+        new NoteRow(value, false, this.lastStoredSpan, key).noteRowDiv
+      );
+    });
   }
 
   addNoteRow(): void {
@@ -44,10 +57,11 @@ class NoteRow {
   constructor(
     text: string,
     readOnly: boolean,
-    lastStoredSpan: HTMLSpanElement
+    lastStoredSpan: HTMLSpanElement,
+    id?: string
   ) {
-    // Make Row main properties
-    this.id = this.createUUID();
+    // Make Row main properties. Creates a new id, if an id doesn't exist
+    this.id = id ? id : this.createUUID();
 
     // Creates the row div
     this.noteRowDiv = document.createElement("div");
@@ -119,11 +133,15 @@ class NoteText {
       `Writing to local storage. ID: ${this.id}, Value: ${this.textarea.value}`
     );
     this.lastStoredSpan.innerHTML = new Date().toLocaleString();
+
+    // Writes to local storage
+    localStorage.setItem(this.id, this.textarea.value);
   }
 }
 
 class RemoveButton {
   btn: HTMLButtonElement;
+  rowToRemove?: HTMLElement;
 
   constructor(noteId: string) {
     // Create button
@@ -133,12 +151,22 @@ class RemoveButton {
     this.btn.textContent = "Remove";
     this.btn.className = "removeButton";
     this.btn.onclick = () => {
-      this.remove(noteId);
+      this.removeFromDOM(noteId);
+      this.removeFromLocalStorage(noteId);
     };
   }
 
-  remove(id: string) {
-    console.log("Removing:", id);
+  removeFromDOM(id: string) {
+    this.rowToRemove = document.getElementById(id)!;
+    console.log("Removing row with id:", id);
+    this.rowToRemove.remove();
+  }
+
+  removeFromLocalStorage(id: string) {
+    // Remove from local storage
+    console.log(`Removing from local storage. ID: ${id}`);
+
+    localStorage.removeItem(id);
   }
 }
 

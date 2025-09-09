@@ -11,10 +11,6 @@ function init() {
   ) as HTMLSpanElement;
   const noteContainer = new NoteContainer(noteContainerDiv, lastStoredSpan);
 
-  for (let i = 0; i < 5; i++) {
-    noteContainer.addNoteRow();
-  }
-
   document.getElementById("addButton")?.addEventListener("click", () => {
     noteContainer.addNoteRow();
   });
