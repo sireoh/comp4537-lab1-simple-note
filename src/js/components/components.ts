@@ -4,7 +4,7 @@ class NoteRow {
 
   // Note Row Child Elements
   noteText: NoteText;
-  removeButton: RemoveButton;
+  removeButton?: RemoveButton;
 
   // Magic numbers
   static SIXTEEN: number = 16;
@@ -12,20 +12,21 @@ class NoteRow {
   static THREE_BITS: number = 0x3;
   static EIGHT_BITS: number = 0x8;
 
-  constructor(text: string) {
+  constructor(text: string, readOnly: boolean) {
     // Make Row main properties
     this.id = this.createUUID();
 
     // Creates the row div
     this.noteRowDiv = document.createElement("div");
+    this.noteRowDiv.className = "noteRow";
 
     // Creates the NoteText and RemoveButton
-    this.noteText = new NoteText(this.id, text);
-    this.removeButton = new RemoveButton(this.id);
+    this.noteText = new NoteText(text);
+    if (!readOnly) this.removeButton = new RemoveButton(this.id);
 
     // Appends both children
-    this.noteRowDiv.appendChild(this.noteText.div);
-    this.noteRowDiv.appendChild(this.removeButton.btn);
+    this.noteRowDiv.appendChild(this.noteText.textarea);
+    if (!readOnly) this.noteRowDiv.appendChild(this.removeButton!.btn);
   }
 
   /**
@@ -45,15 +46,20 @@ class NoteRow {
 }
 
 class NoteText {
-  div: HTMLDivElement;
+  textarea: HTMLTextAreaElement;
 
-  constructor(id: string, text: string) {
-    // Create div
-    this.div = document.createElement("div");
+  // Magic Numbers
+  static MAX_HEIGHT = 3;
+
+  constructor(text: string) {
+    // Create textarea
+    this.textarea = document.createElement("textarea");
 
     // Add properties
-    this.div.textContent = text;
-    this.div.className = "noteText";
+    this.textarea.textContent = text;
+    this.textarea.className = "noteText";
+    this.textarea.rows = NoteText.MAX_HEIGHT;
+    this.textarea.disabled = true;
   }
 }
 
@@ -76,3 +82,5 @@ class RemoveButton {
     console.log("Removing:", id);
   }
 }
+
+export { NoteRow, NoteText, RemoveButton };
