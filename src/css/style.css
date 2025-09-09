@@ -1,0 +1,75 @@
+header {
+  display: grid;
+  justify-items: end;
+}
+
+footer {
+  display: grid;
+  justify-items: center;
+  margin-top: 1em;
+  row-gap: 1em;
+}
+
+#noteContainer {
+  display: grid;
+  justify-items: center;
+  row-gap: 1em;
+}
+
+.noteRow {
+  display: flex;
+}
+
+.noteText {
+  width: 75%;
+  background-color: royalblue;
+  resize: none;
+  color: white;
+  font-size: x-large;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.5em;
+  border: solid midnightblue;
+  margin-right: 1em;
+}
+
+.removeButton {
+  background-color: orange;
+  font-size: x-large;
+  color: white;
+  border: solid sienna;
+  padding: 0 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: crimson;
+}
+
+#addButton {
+  background-color: mediumseagreen;
+  color: white;
+  padding: 0 2em;
+  font-size: x-large;
+  border: solid darkolivegreen;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+#addButton:hover {
+  background-color: forestgreen;
+}
+
+#goBackButton {
+  background-color: royalblue;
+  color: white;
+  padding: 0 2em;
+  font-size: x-large;
+  border: solid midnightblue;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+#goBackButton:hover {
+  background-color: midnightblue;
+}

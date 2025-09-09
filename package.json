@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc && copyfiles -u 1 src/*.html src/css/** src/lang/** dist",
+    "dev": "tsc && copyfiles -u 1 src/*.html src/html/** src/css/** src/lang/** dist",
     "build": "tsc && copyfiles -u 1 src/*.html src/css/** src/lang/** D:/BCIT/Term-4-CST/Fall 2025/COMP 4537 - Arch/comp4537-labs/COMP4537/labs/1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
