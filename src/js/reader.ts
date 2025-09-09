@@ -1,22 +1,22 @@
-import { NoteRow } from "./components/components.js";
+import { NoteContainer } from "./components/components.js";
 
-function loadMockData() {
+function init() {
   console.log("Loading mock data ...");
 
-  const noteContainer = document.getElementById(
+  const noteContainerDiv = document.getElementById(
     "noteContainer"
   ) as HTMLDivElement;
-  let currentRow: NoteRow;
+  const lastStoredSpan = document.getElementById(
+    "lastStored"
+  ) as HTMLSpanElement;
+  const noteContainer = new NoteContainer(noteContainerDiv, lastStoredSpan);
+
   for (let i = 0; i < 5; i++) {
-    currentRow = new NoteRow(
-      "is simply dummy text of the printing and typesetting industry",
-      true
-    );
-    noteContainer.appendChild(currentRow.noteRowDiv);
+    noteContainer.addNoteRow();
   }
 }
 
-loadMockData();
+init();
 
 document.getElementById("addButton")?.addEventListener("click", () => {
   window.location.href = "writer.html";
