@@ -2,9 +2,13 @@ class NoteContainer {
   noteContainerDiv: HTMLDivElement;
   lastStoredSpan: HTMLSpanElement;
 
+  // Notes Dictionary
+  notes: Record<string, string>;
+
   constructor(
     noteContainerDiv: HTMLDivElement,
-    lastStoredSpanDiv: HTMLSpanElement
+    lastStoredSpanDiv: HTMLSpanElement,
+    readonly: boolean
   ) {
     // Links to the existing container on the DOM
     this.noteContainerDiv = noteContainerDiv;
@@ -12,23 +16,36 @@ class NoteContainer {
     // Links to the existing span on the DOM
     this.lastStoredSpan = lastStoredSpanDiv;
 
+    // Initialize the notes dictionary
+    this.notes = {};
+
     // Hydrates the container immediately
-    this.hydrateContainer();
+    this.hydrateContainer(readonly);
   }
 
-  hydrateContainer(): void {
-    // Hydrates the container with data from the local storage
-    Object.keys(localStorage).forEach((key) => {
-      const value = localStorage.getItem(key)!;
+  hydrateContainer(readonly: boolean): void {
+    // Hydrate the lastStored from the localStorage
+    this.lastStoredSpan.textContent = localStorage.getItem("lastStored") || "";
+
+    // Hydrates the container with notes from the local storage
+    let data: { notes: Record<string, string> } = {
+      notes: JSON.parse(localStorage.getItem("notes") || "{}"),
+    };
+
+    // Update the  local notes with the localStorage notes if exists
+    this.notes = data.notes;
+
+    Object.entries(data.notes).forEach(([key, value]) => {
       this.noteContainerDiv.appendChild(
-        new NoteRow(value, false, this.lastStoredSpan, key).noteRowDiv
+        new NoteRow(value, readonly, this.lastStoredSpan, this.notes, key)
+          .noteRowDiv
       );
     });
   }
 
   addNoteRow(): void {
     this.noteContainerDiv.appendChild(
-      new NoteRow("", false, this.lastStoredSpan).noteRowDiv
+      new NoteRow("", false, this.lastStoredSpan, this.notes).noteRowDiv
     );
   }
 
@@ -58,6 +75,7 @@ class NoteRow {
     text: string,
     readOnly: boolean,
     lastStoredSpan: HTMLSpanElement,
+    notes?: Record<string, string>,
     id?: string
   ) {
     // Make Row main properties. Creates a new id, if an id doesn't exist
@@ -69,7 +87,13 @@ class NoteRow {
     this.noteRowDiv.id = this.id;
 
     // Creates the NoteText and RemoveButton
-    this.noteText = new NoteText(this.id, text, readOnly, lastStoredSpan);
+    this.noteText = new NoteText(
+      this.id,
+      text,
+      readOnly,
+      lastStoredSpan,
+      notes
+    );
     if (!readOnly) this.removeButton = new RemoveButton(this.id);
 
     // Appends both children
@@ -101,11 +125,15 @@ class NoteText {
   // Magic Numbers
   static MAX_HEIGHT = 3;
 
+  // Last Stored Date Value
+  lastStoredValue: string;
+
   constructor(
     id: string,
     text: string,
     readOnly: boolean,
-    lastStoredSpanDiv: HTMLSpanElement
+    lastStoredSpanDiv: HTMLSpanElement,
+    notes?: Record<string, string>
   ) {
     // Stores the id into the class
     this.id = id;
@@ -122,20 +150,38 @@ class NoteText {
     this.textarea.rows = NoteText.MAX_HEIGHT;
     this.textarea.disabled = readOnly;
 
+    // Last Stored Date Value
+    this.lastStoredValue = "";
+
     // Writes to local storage onchange
     this.textarea.oninput = () => {
-      this.writeToLocalStorage();
+      this.writeToLocalStorage(notes);
     };
   }
 
-  writeToLocalStorage() {
-    console.log(
-      `Writing to local storage. ID: ${this.id}, Value: ${this.textarea.value}`
-    );
-    this.lastStoredSpan.innerHTML = new Date().toLocaleString();
+  writeToLocalStorage(notes?: Record<string, string>) {
+    // Date / Time Area
+    this.updateAndStoreTime();
 
     // Writes to local storage
-    localStorage.setItem(this.id, this.textarea.value);
+
+    // Update the dictionary
+    notes![this.id] = this.textarea.value;
+    localStorage.setItem("notes", JSON.stringify(notes));
+
+    // Print client local dictionary
+    console.log(notes);
+  }
+
+  updateAndStoreTime() {
+    // Update the Value
+    this.lastStoredValue = new Date().toLocaleString();
+
+    // Update on the DOM using the value
+    this.lastStoredSpan.innerHTML = this.lastStoredValue;
+
+    // Store on localStorage
+    localStorage.setItem("lastStored", this.lastStoredValue);
   }
 }
 
@@ -163,10 +209,17 @@ class RemoveButton {
   }
 
   removeFromLocalStorage(id: string) {
+    // Get the notes from local storage
+    const notes: Record<string, string> = JSON.parse(
+      localStorage.getItem("notes") || "{}"
+    );
+    delete notes[id];
+
     // Remove from local storage
     console.log(`Removing from local storage. ID: ${id}`);
 
-    localStorage.removeItem(id);
+    // Update localStorage
+    localStorage.setItem("notes", JSON.stringify(notes));
   }
 }
 
