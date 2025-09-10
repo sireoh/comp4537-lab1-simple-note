@@ -1,8 +1,7 @@
 import { NoteContainer } from "./components/components.js";
+import { Constants } from "./constants.js";
 
 export function init(readonly: boolean) {
-  console.log("Loading mock data ...");
-
   const noteContainerDiv = document.getElementById(
     "noteContainer"
   ) as HTMLDivElement;
@@ -18,4 +17,11 @@ export function init(readonly: boolean) {
   document.getElementById("addButton")?.addEventListener("click", () => {
     noteContainer.addNoteRow();
   });
+
+  if (readonly) {
+    setInterval(() => {
+      noteContainer.hydrateContainer(readonly);
+      console.log("Fetching and loading data from localStorage ...");
+    }, Constants.TWO_SECONDS);
+  }
 }
