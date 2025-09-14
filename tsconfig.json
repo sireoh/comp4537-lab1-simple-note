@@ -3,8 +3,8 @@
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",
-    "outDir": "./dist",
-    // "outDir": "D:/BCIT/Term-4-CST/Fall 2025/COMP 4537 - Arch/comp4537-labs/COMP4537/labs/1",
+    // "outDir": "./dist",
+    "outDir": "D:/BCIT/Term-4-CST/Fall 2025/COMP 4537 - Arch/comp4537-labs/COMP4537/labs/1",
     // "outDir": "I:/BCIT/Fall-2025/COMP 4537 - Arch/Lab 1/comp4537-labs/COMP4537/labs/1",
 
     // Environment Settings

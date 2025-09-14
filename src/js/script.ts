@@ -1,3 +1,3 @@
-document.getElementById("goBackButton")?.addEventListener("click", () => {
-  window.location.href = "../index.html";
-});
+import { Main } from "./main.js";
+
+Main.initIndex();
