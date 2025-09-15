@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writer</title>
+    <title id="writerTitle"></title>
     <link rel="stylesheet" href="../css/style.css"/>
 </head>
 <body>
     <header>
-      <h2>Writer</h2>
-      <small id="lastStoredRow">Last stored at: <span id="lastStored"></span></small>
+      <h2 id="writerTitleHeader"></h2>
+      <small id="lastStoredRow"><span id="lastStored"></span></small>
     </header>
     <div id="noteContainer"></div>
     <footer>
-      <button id="addButton">Add</button>
-      <button id="goBackButton">Go Back</button>
+      <button id="addButton"></button>
+      <button id="goBackButton"></button>
     </footer>
 
     <!-- Load Scripts -->
     <script type="module" src="../js/writer.js"></script>
-    <script type="module" src="../js/script.js"></script>
 </body>
 </html>

@@ -77,3 +77,13 @@ footer {
 a {
   text-decoration: none;
 }
+
+#writerButton {
+  background-color: mediumseagreen;
+  color: white;
+  padding: 0 2em;
+  font-size: x-large;
+  border: solid darkolivegreen;
+  border-radius: 0.25em;
+  cursor: pointer;
+}

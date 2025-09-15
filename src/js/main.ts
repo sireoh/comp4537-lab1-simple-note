@@ -1,7 +1,33 @@
+import { User } from "../lang/messages/en/user.js";
 import { NoteContainer } from "./components/components.js";
 import { Constants } from "./constants.js";
 
 export class Main {
+  static "Reader" = {
+    initTitle() {
+      // Title Main
+      document.getElementById("readerTitle")!.innerHTML = User.READER_TITLE;
+
+      // Title H2
+      document.getElementById("readerTitleHeader")!.innerHTML =
+        User.READER_TITLE;
+    },
+  };
+
+  static "Writer" = {
+    initTitle() {
+      // Title Main
+      document.getElementById("writerTitle")!.innerHTML = User.WRITER_TITLE;
+
+      // Title H2
+      document.getElementById("writerTitleHeader")!.innerHTML =
+        User.WRITER_TITLE;
+
+      // Init buttons
+      document.getElementById("addButton")!.innerHTML = User.ADD_BUTTON;
+    },
+  };
+
   static init(readonly: boolean) {
     const noteContainerDiv = document.getElementById(
       "noteContainer"
@@ -27,9 +53,24 @@ export class Main {
     }
   }
 
-  static initIndex() {
-    document.getElementById("goBackButton")?.addEventListener("click", () => {
+  static initGoBackButton() {
+    // Init go back button
+    document.getElementById("goBackButton")!.addEventListener("click", () => {
       window.location.href = "../index.html";
     });
+
+    document.getElementById("goBackButton")!.innerHTML = User.GO_BACK_BUTTON;
+  }
+
+  static initIndex() {
+    // Title Main
+    document.getElementById("indexTitle")!.innerHTML = User.INDEX_TITLE;
+
+    // Title H2
+    document.getElementById("indexTitleHeader")!.innerHTML = User.INDEX_TITLE;
+
+    // Anchors
+    document.getElementById("writerButton")!.innerHTML = User.WRITER_BUTTON;
+    document.getElementById("readerButton")!.innerHTML = User.READER_BUTTON;
   }
 }

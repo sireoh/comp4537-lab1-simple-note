@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reader</title>
+    <title id="readerTitle"></title>
     <link rel="stylesheet" href="../css/style.css"/>
 </head>
 <body>
     <header>
-      <h2>Reader</h2>
-      <small id="lastStoredRow">Last stored at: <span id="lastStored"></span></small>
+      <h2 id="readerTitleHeader"></h2>
+      <small id="lastStoredRow"><span id="lastStored"></span></small>
     </header>
     <div id="noteContainer"></div>
     <footer>
-      <button id="goBackButton">Go Back</button>
+      <button id="goBackButton"></button>
     </footer>
 
     <!-- Load Scripts -->
     <script type="module" src="../js/reader.js"></script>
-    <script type="module" src="../js/script.js"></script>
   </body>
 </html>
