@@ -10,4 +10,7 @@ export class User {
   static READER_BUTTON = "Reader";
   static GO_BACK_BUTTON = "Go Back";
   static ADD_BUTTON = "Add";
+
+  // Date
+  static LAST_STORED_AT_LABEL = "Last stored at:";
 }

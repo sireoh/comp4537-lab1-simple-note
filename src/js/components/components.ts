@@ -1,3 +1,5 @@
+import { User } from "../../lang/messages/en/user.js";
+
 class NoteContainer {
   noteContainerDiv: HTMLDivElement;
   lastStoredSpan: HTMLSpanElement;
@@ -26,7 +28,8 @@ class NoteContainer {
   hydrateContainer(readonly: boolean): void {
     // Hydrate the lastStored from the localStorage
     this.lastStoredSpan.textContent =
-      `Last stored at: ${localStorage.getItem("lastStored")}` || "";
+      `${User.LAST_STORED_AT_LABEL} ${localStorage.getItem("lastStored")}` ||
+      "";
 
     // Hydrates the container with notes from the local storage
     let data: { notes: Record<string, string> } = {
@@ -183,7 +186,7 @@ class NoteText {
     this.lastStoredValue = new Date().toLocaleString();
 
     // Update on the DOM using the value
-    this.lastStoredSpan.innerHTML = `Last stored at: ${this.lastStoredValue}`;
+    this.lastStoredSpan.innerHTML = `${User.LAST_STORED_AT_LABEL} ${this.lastStoredValue}`;
 
     // Store on localStorage
     localStorage.setItem("lastStored", this.lastStoredValue);
